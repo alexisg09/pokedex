@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
+import React, { Fragment, useState } from 'react';
 
-import { StyleSheet, Image, Text, View, TouchableOpacity } from 'react-native';
+import { StyleSheet, Image, Text, ScrollView, TouchableOpacity } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useQuery } from "@tanstack/react-query";
 import { fetchPokemons } from './api/fetchPokemons';
@@ -13,27 +13,30 @@ export default function App() {
   console.log('status : ', status)
   console.log(data?.results)
 
+
+
   return (
-    <View style={styles.container}>
+    <ScrollView>
       <Text>Salut la team</Text>
       <TouchableOpacity
         onPress={() => setEnableFetch(true)}
         style={{ backgroundColor: 'blue' }}>
-        <Text style={{ fontSize: 20, color: '#fff' }}>Zé parti</Text>
+        <Text style={{ fontSize: 70, color: '#fff' }}>Zé parti</Text>
       </TouchableOpacity>
       {status && (<Text>{status}</Text>)}
 
       {status === 'success' && data.results.map((poke) => {
-        <>
-          <Image source={logo} style={{ width: 50, height: 50 }} />
-          <Text>{poke.name}</Text>
-          <Text>{poke.url}</Text>
-          <Text>success</Text>
-        </>
+        return (
+          <Fragment key={poke.url}>
+            <Image source={logo} style={{ width: 50, height: 50 }} />
+            <Text style={{ color: 'red' }}>{poke.name}</Text>
+            <Text>{poke.url}</Text>
+          </Fragment>)
+
       })
       }
-      <StatusBar style="auto" />
-    </View>
+      {/* <StatusBar style="auto" /> */}
+    </ScrollView >
 
   );
 }
