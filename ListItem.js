@@ -1,40 +1,54 @@
 import React, { Fragment, useState } from 'react';
 
-import { StyleSheet, Image, Text, ScrollView, TouchableOpacity, View } from 'react-native';
+import { StyleSheet, Image, Text, ScrollView, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useQuery } from "@tanstack/react-query";
 import { fetchPokemons } from './api/fetchPokemons';
-import logo from './assets/favicon.png'
-import { Link } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { useFonts } from 'expo-font';
+
 
 
 export default function App() {
   const [enableFetch, setEnableFetch] = useState(false)
-  const { data, status, isLoading } = useQuery(["pokemons"], () => fetchPokemons(), { enabled: enableFetch });
-
+  const { data, status, isLoading, isError } = useQuery(["pokemons"], () => fetchPokemons(), { enabled: enableFetch });
+  const [fontsLoaded] = useFonts({
+    'Pokemon-Solid': require('./assets/fonts/Pokemon_Solid.ttf'),
+    'Pokemon-Hollow': require('./assets/fonts/Pokemon_Hollow.ttf')
+  });
+  const navigation = useNavigation();
 
   return (
-    <ScrollView>
-      <Text>Salut la team</Text>
-      <TouchableOpacity
-        onPress={() => setEnableFetch(true)}
-        style={{ backgroundColor: 'blue' }}>
-        <Text style={{ fontSize: 70, color: '#fff', textAlign: "center" }}>Zé parti</Text>
-      </TouchableOpacity>
+    <ScrollView style={styles.container}>
+
+      {!enableFetch && fontsLoaded && (
+        <TouchableOpacity
+          onPress={() => setEnableFetch(true)}
+          style={styles.launcher}>
+          <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Pokemon-Solid', textShadowColor: 'black' }}>L a n c e r  P o k é d e x</Text>
+        </TouchableOpacity>
+      )}
+
+
+      {isLoading && enableFetch && (
+        <View style={styles.loader}>
+          <ActivityIndicator size={300} color="#FF4B4B" />
+        </View>
+      )}
+
+      {isError && (
+        <Text>Erreur... Relance l'app</Text>
+      )}
 
       {status === 'success' && data !== undefined && data?.map((poke) => {
         return (
-          <Fragment key={poke.id}>
-            <View style={{ display: "flex", alignContent: 'center', justifyContent: 'center' }}>
-              <TouchableOpacity>
-                <Link to={{ screen: 'Détails', params: { poke: poke } }}>
-                  <Image source={{ uri: poke.image }} style={{ width: 150, height: 150 }} />
-                  <Text style={{ color: 'red' }}>{poke.name}</Text>
-                  <Text>{poke.url}</Text>
-                </Link>
-              </TouchableOpacity>
-            </View>
-          </Fragment>)
+          <View key={poke.id} style={styles.container}>
+            <TouchableOpacity onPress={() => navigation.navigate('Détails', { poke: poke })}>
+              <Image source={{ uri: poke.image, height: 200, width: 200 }} resizeMode="contain" />
+              <Text style={{ color: 'red' }}>{poke.name}</Text>
+              <Text>{poke.url}</Text>
+            </TouchableOpacity>
+          </View>)
 
       })
       }
@@ -47,14 +61,33 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DEDEDE',
+    backgroundColor: '#31375b',
     color: "#fff",
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   item: {
     padding: 20,
     marginVertical: 8,
     marginHorizontal: 16,
   },
+
+  launcher: {
+    textAlign: 'center',
+    backgroundColor: 'pink',
+    marginTop: '50%',
+    marginHorizontal: '10%',
+    borderRadius: 100,
+    elevation: 10,
+    margin: 10,
+    padding: 15
+  },
+
+  loader: {
+    marginTop: '50%'
+  },
+
+  listContainer: {
+    marginHorizontal: '50%',
+    backgroundColor: 'red'
+  }
+
 });
