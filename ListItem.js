@@ -44,8 +44,8 @@ export default function App() {
         return (
           <View key={poke.id} style={styles.container}>
             <TouchableOpacity onPress={() => navigation.navigate('Détails', { poke: poke })}>
-              <Image source={{ uri: poke.image, height: 200, width: 200 }} resizeMode="contain" />
-              <Text style={{ color: 'red' }}>{poke.name}</Text>
+              <Image source={{ uri: poke.image, height: 200, width: 200 }} style={{ alignSelf: 'center' }} resizeMode="contain" />
+              <Text style={{ color: '#fff', fontSize: 20, textAlign: 'center' }}>{poke.name}</Text>
               <Text>{poke.url}</Text>
             </TouchableOpacity>
           </View>)
@@ -62,7 +62,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#31375b',
-    color: "#fff",
   },
   item: {
     padding: 20,

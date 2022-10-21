@@ -52,6 +52,9 @@ export default function ItemDetails({ route }) {
         return "lightblue";
         break;
 
+      case "Insecte":
+        return "#9acd32"
+
       default:
         return 'white';
 
@@ -65,12 +68,32 @@ export default function ItemDetails({ route }) {
       colors={[getColorFromType(pokemon.apiTypes[0].name), getColorFromType(pokemon.apiTypes[1] ? pokemon.apiTypes[1].name : "")]}>
       <Image source={{ uri: pokemon.image }} style={{ width: 400, height: 400 }} />
       <Text style={{ fontSize: 30 }}>{pokemon.name}</Text>
-      <View>
+      <View style={{ paddingVertical: 15 }}>
         <Image source={{ uri: pokemon.apiTypes[0].image }} style={{ width: 50, height: 50 }} />
         {
           pokemon.apiTypes[1] && (
             <Image source={{ uri: pokemon.apiTypes[1].image }} style={{ width: 50, height: 50 }} />
           )
+        }
+      </View>
+      <View style={{ paddingVertical: 15, alignItems: 'center' }}>
+        <Text>Ne bronche pas face au(x) type(s) :</Text>
+        {
+          pokemon.apiResistances.map((type) => type.damage_relation === 'resistant' && (
+            <Text style={styles.textType} key={type.name}>{type.name}</Text>
+          ))
+
+
+        }
+      </View>
+      <View style={{ paddingVertical: 15, alignItems: 'center' }}>
+        <Text>Se chie dessus face au(x) type(s) :</Text>
+        {
+          pokemon.apiResistances.map((type) => type.damage_relation === 'vulnerable' && (
+            <Text style={styles.textType} key={type.name}>{type.name}</Text>
+          ))
+
+
         }
       </View>
       <StatusBar style="auto" />
@@ -87,4 +110,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
   },
+  textType: {
+    fontWeight: 'bold',
+  }
 });
