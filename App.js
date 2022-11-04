@@ -41,10 +41,14 @@ const App = () => {
 
           return <Ionicons name={iconName} size={size} color={color} />;
         },
-        tabBarActiveTintColor: '#6774bf',
-        tabBarInactiveTintColor: 'gray',
+        tabBarActiveTintColor: '#b2e1f7',
+        tabBarInactiveTintColor: '#d6d6d6',
         headerStyle: { backgroundColor: '#31375b' },
-        headerTitleStyle: { color: '#ffffff' }
+        headerTitleStyle: { color: '#ffffff' },
+        tabBarStyle: {
+          backgroundColor: '#31375b',
+          borderTopColor: '#31375b'
+        }
       })}>
         <Tab.Screen name="Pokédex" component={ListItem} />
         <Tab.Screen name="Crédits" component={Informations} />
@@ -55,7 +59,10 @@ const App = () => {
   return (
     <QueryClientProvider client={queryClient}>
       <NavigationContainer>
-        <Stack.Navigator>
+        <Stack.Navigator screenOptions={{
+          headerStyle: { backgroundColor: '#31375b' },
+          headerTitleStyle: { color: '#ffffff' },
+        }}>
           <Stack.Screen
             name="Home"
             component={Home}
@@ -65,7 +72,7 @@ const App = () => {
           <Stack.Screen name="Détails" component={ItemDetails} />
         </Stack.Navigator>
       </NavigationContainer>
-    </QueryClientProvider>
+    </QueryClientProvider >
   );
 }
 
