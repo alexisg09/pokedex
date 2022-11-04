@@ -37,7 +37,14 @@ export default function App() {
       )}
 
       {isError && (
-        <Text>Erreur... Relance l'app</Text>
+        <View>
+          <Text>Erreur... Relance l'app</Text>
+          <TouchableOpacity
+            onPress={() => setEnableFetch(true)}
+            style={styles.launcher}>
+            <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Pokemon-Solid', textShadowColor: 'black' }}>R e l a n c e r</Text>
+          </TouchableOpacity>
+        </View>
       )}
 
       {status === 'success' && data !== undefined && data?.map((poke) => {

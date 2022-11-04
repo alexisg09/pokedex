@@ -8,6 +8,8 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import ItemDetails from './ItemDetails';
 import Informations from './Informations';
 import { createStackNavigator } from '@react-navigation/stack';
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 
 
 // Create a client
@@ -19,10 +21,31 @@ const App = () => {
   const Tab = createBottomTabNavigator();
   const Stack = createStackNavigator();
 
+
+  //   screenOptions = {{ headerStyle: { backgroundColor: '#31375b' }, headerTitleStyle: { color: '#ffffff' } }
+  // }
   const Home = () => {
 
     return (
-      <Tab.Navigator>
+      <Tab.Navigator screenOptions={({ route }) => ({
+        tabBarIcon: ({ focused, color, size }) => {
+          let iconName;
+
+          if (route.name === 'Pokédex') {
+            iconName = focused
+              ? 'baseball'
+              : 'baseball-outline';
+          } else if (route.name === 'Crédits') {
+            iconName = focused ? 'newspaper' : 'newspaper-outline';
+          }
+
+          return <Ionicons name={iconName} size={size} color={color} />;
+        },
+        tabBarActiveTintColor: '#6774bf',
+        tabBarInactiveTintColor: 'gray',
+        headerStyle: { backgroundColor: '#31375b' },
+        headerTitleStyle: { color: '#ffffff' }
+      })}>
         <Tab.Screen name="Pokédex" component={ListItem} />
         <Tab.Screen name="Crédits" component={Informations} />
       </Tab.Navigator>
@@ -38,7 +61,7 @@ const App = () => {
             component={Home}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name="Profile" component={ListItem} />
+          <Stack.Screen name="Pokédex" component={ListItem} />
           <Stack.Screen name="Détails" component={ItemDetails} />
         </Stack.Navigator>
       </NavigationContainer>
