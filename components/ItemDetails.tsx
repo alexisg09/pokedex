@@ -7,36 +7,35 @@ import { StyleSheet, Image, Text, View } from "react-native";
 import style from "../styles/style";
 import { Pokemon } from "../types/pokemon";
 
-interface colorTypeCombo {
+export interface colorTypeCombo {
   color: string;
   type: string;
 }
 
+export const colorTypes: colorTypeCombo[] = [
+  { type: "Plante", color: "darkgreen" },
+  { type: "Feu", color: "crimson" },
+  { type: "Eau", color: "cornflowerblue" },
+  { type: "Poison", color: "darkorchid" },
+  { type: "Fée", color: "pink" },
+  { type: "Psy", color: "mediumvioletred" },
+  { type: "Spectre", color: "darkmagenta" },
+  { type: "Combat", color: "coral" },
+  { type: "Normal", color: "gray" },
+  { type: "Électrik", color: "gold" },
+  { type: "Sol", color: "moccasin" },
+  { type: "Roche", color: "brown" },
+  { type: "Acier", color: "slategray" },
+  { type: "Vol", color: "lightblue" },
+  { type: "Ténèbres", color: "darkslategray" },
+  { type: "Dragon", color: "darkblue" },
+  { type: "Insecte", color: "#9acd32" },
+  { type: "Glace", color: "deepskyblue" },
+];
+export const findColorFromType = (typeGiven: string): colorTypeCombo => {
+  return colorTypes.find((type) => type.type === typeGiven);
+};
 export default function PokemonDetails({ route }) {
-  const colorTypes: colorTypeCombo[] = [
-    { type: "Plante", color: "darkgreen" },
-    { type: "Feu", color: "crimson" },
-    { type: "Eau", color: "cornflowerblue" },
-    { type: "Poison", color: "darkorchid" },
-    { type: "Fée", color: "pink" },
-    { type: "Psy", color: "mediumvioletred" },
-    { type: "Spectre", color: "darkmagenta" },
-    { type: "Combat", color: "coral" },
-    { type: "Normal", color: "gray" },
-    { type: "Électrik", color: "gold" },
-    { type: "Sol", color: "moccasin" },
-    { type: "Roche", color: "brown" },
-    { type: "Acier", color: "slategray" },
-    { type: "Vol", color: "lightblue" },
-    { type: "Ténèbres", color: "darkslategray" },
-    { type: "Dragon", color: "darkblue" },
-    { type: "Insecte", color: "#9acd32" },
-    { type: "Glace", color: "deepskyblue" },
-  ];
-  const findColorFromType = (typeGiven: string): colorTypeCombo => {
-    return colorTypes.find((type) => type.type === typeGiven);
-  };
-
   const navigation = useNavigation();
 
   const pokemon: Pokemon = route.params.poke;
