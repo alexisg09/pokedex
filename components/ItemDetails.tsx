@@ -54,8 +54,9 @@ export default function PokemonDetails({ route }) {
       style={styles.detailContainer}
       colors={[
         findColorFromType(pokemon.apiTypes[0].name).color,
-        // eslint-disable-next-line prettier/prettier
-        findColorFromType(pokemon.apiTypes.length > 1 ? pokemon.apiTypes[1].name : "").color,
+        pokemon.apiTypes[1]
+          ? findColorFromType(pokemon.apiTypes[1].name).color
+          : findColorFromType("Normal").color,
       ]}
     >
       <Image
