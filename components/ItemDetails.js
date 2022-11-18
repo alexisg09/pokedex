@@ -4,7 +4,7 @@ import { StyleSheet, Image, Text, TouchableOpacity, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
 
-export default function ItemDetails({ route }) {
+export default function PokemonDetails({ route }) {
 
   const getColorFromType = (type) => {
 

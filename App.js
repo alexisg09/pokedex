@@ -2,14 +2,13 @@ import {
   QueryClient,
   QueryClientProvider,
 } from '@tanstack/react-query'
-import ListItem from './ListItem'
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
-import ItemDetails from './ItemDetails';
-import Informations from './Informations';
 import { createStackNavigator } from '@react-navigation/stack';
 import Ionicons from '@expo/vector-icons/Ionicons';
-
+import Informations from './components/Informations';
+import PokemonDetails from './components/ItemDetails';
+import ListItem from './components/ListItem';
 
 
 // Create a client
@@ -69,7 +68,7 @@ const App = () => {
             options={{ headerShown: false }}
           />
           <Stack.Screen name="Pokédex" component={ListItem} />
-          <Stack.Screen name="Détails" component={ItemDetails} />
+          <Stack.Screen name="Détails" component={PokemonDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider >

@@ -3,9 +3,9 @@ import React, { Fragment, useState } from 'react';
 import { StyleSheet, Image, Text, ScrollView, TouchableOpacity, View, ActivityIndicator } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
 import { useQuery } from "@tanstack/react-query";
-import { fetchPokemons } from './api/fetchPokemons';
 import { useNavigation } from '@react-navigation/native';
 import { useFonts } from 'expo-font';
+import { fetchPokemons } from '../api/fetchPokemons';
 
 
 
@@ -13,8 +13,8 @@ export default function App() {
   const [enableFetch, setEnableFetch] = useState(false)
   const { data, status, isLoading, isError } = useQuery(["pokemons"], () => fetchPokemons(), { enabled: enableFetch });
   const [fontsLoaded] = useFonts({
-    'Pokemon-Solid': require('./assets/fonts/Pokemon_Solid.ttf'),
-    'Pokemon-Hollow': require('./assets/fonts/Pokemon_Hollow.ttf')
+    'Pokemon-Solid': require('../assets/fonts/Pokemon_Solid.ttf'),
+    'Pokemon-Hollow': require('../assets/fonts/Pokemon_Hollow.ttf')
   });
   const navigation = useNavigation();
 

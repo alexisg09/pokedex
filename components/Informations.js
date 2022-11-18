@@ -1,10 +1,7 @@
-import React, { Fragment, useState } from 'react';
+import React from 'react';
 
 import { StyleSheet, Image, Text, ScrollView, TouchableOpacity, View } from 'react-native';
 import { StatusBar } from 'expo-status-bar';
-import { useQuery } from "@tanstack/react-query";
-import { fetchPokemons } from './api/fetchPokemons';
-import logo from './assets/favicon.png'
 
 const Informations = () => {
   return (
