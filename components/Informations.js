@@ -1,33 +1,29 @@
-import React from 'react';
+import { StatusBar } from "expo-status-bar";
+import React from "react";
+import { StyleSheet, Text, ScrollView } from "react-native";
 
-import { StyleSheet, Image, Text, ScrollView, TouchableOpacity, View } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import style from "../styles/style";
 
 const Informations = () => {
   return (
     <ScrollView style={styles.container}>
       <Text style={styles.item}>Informations page</Text>
       <StatusBar style="auto" />
-    </ScrollView >
-
+    </ScrollView>
   );
-}
+};
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#31375b',
+    backgroundColor: style.colors.primary0,
   },
   item: {
-    paddingTop: 40,
-    display: 'flex',
-    alignSelf: 'center',
-    color: "#ffffff",
-
+    paddingTop: style.spacing.demiLG,
+    display: "flex",
+    alignSelf: "center",
+    color: style.colors.white,
   },
 });
-
-
-
 
 export default Informations;

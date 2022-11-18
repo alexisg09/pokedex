@@ -1,38 +1,73 @@
-import React, { Fragment, useState } from 'react';
-
-import { StyleSheet, Image, Text, ScrollView, TouchableOpacity, View, ActivityIndicator } from 'react-native';
-import { StatusBar } from 'expo-status-bar';
+import { useNavigation } from "@react-navigation/native";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigation } from '@react-navigation/native';
-import { useFonts } from 'expo-font';
-import { fetchPokemons } from '../api/fetchPokemons';
+import { useFonts } from "expo-font";
+import { StatusBar } from "expo-status-bar";
+import React, { useState, useCallback } from "react";
+import {
+  StyleSheet,
+  Image,
+  RefreshControl,
+  Text,
+  ScrollView,
+  TouchableOpacity,
+  View,
+  ActivityIndicator,
+} from "react-native";
 
-
+import { fetchPokemons } from "../api/fetchPokemons";
+import style from "../styles/style";
 
 export default function App() {
-  const [enableFetch, setEnableFetch] = useState(false)
-  const { data, status, isLoading, isError } = useQuery(["pokemons"], () => fetchPokemons(), { enabled: enableFetch });
+  const [enableFetch, setEnableFetch] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
+  const { data, status, isLoading, isError } = useQuery(
+    ["pokemons"],
+    () => fetchPokemons(),
+    { enabled: enableFetch }
+  );
   const [fontsLoaded] = useFonts({
-    'Pokemon-Solid': require('../assets/fonts/Pokemon_Solid.ttf'),
-    'Pokemon-Hollow': require('../assets/fonts/Pokemon_Hollow.ttf')
+    "Pokemon-Solid": require("../assets/fonts/Pokemon_Solid.ttf"),
+    "Pokemon-Hollow": require("../assets/fonts/Pokemon_Hollow.ttf"),
   });
   const navigation = useNavigation();
 
-  return (
-    <ScrollView style={styles.container}>
+  const wait = (timeout) => {
+    return new Promise((resolve) => setTimeout(resolve, timeout));
+  };
 
+  const onRefresh = useCallback(() => {
+    setIsRefreshing(true);
+    wait(2000).then(() => setIsRefreshing(false));
+  }, []);
+
+  return (
+    <ScrollView
+      style={styles.container}
+      refreshControl={
+        <RefreshControl refreshing={isRefreshing} onRefresh={onRefresh} />
+      }
+    >
       {!enableFetch && fontsLoaded && (
         <TouchableOpacity
           onPress={() => setEnableFetch(true)}
-          style={styles.launcher}>
-          <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Pokemon-Solid', textShadowColor: 'black' }}>L a n c e r  P o k é d e x</Text>
+          style={styles.launcher}
+        >
+          <Text
+            style={{
+              fontSize: 20,
+              color: style.colors.white,
+              fontFamily: "Pokemon-Solid",
+              textShadowColor: "black",
+            }}
+          >
+            L a n c e r P o k é d e x
+          </Text>
         </TouchableOpacity>
       )}
 
-
       {isLoading && enableFetch && (
         <View style={styles.loader}>
-          <ActivityIndicator size={300} color="#FF4B4B" />
+          <ActivityIndicator size={300} color={style.colors.secondary0} />
         </View>
       )}
 
@@ -41,59 +76,82 @@ export default function App() {
           <Text>Erreur... Relance l'app</Text>
           <TouchableOpacity
             onPress={() => setEnableFetch(true)}
-            style={styles.launcher}>
-            <Text style={{ fontSize: 20, color: '#fff', fontFamily: 'Pokemon-Solid', textShadowColor: 'black' }}>R e l a n c e r</Text>
+            style={styles.launcher}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                color: style.colors.white,
+                fontFamily: "Pokemon-Solid",
+                textShadowColor: "black",
+              }}
+            >
+              R e l a n c e r
+            </Text>
           </TouchableOpacity>
         </View>
       )}
 
-      {status === 'success' && data !== undefined && data?.map((poke) => {
-        return (
-          <View key={poke.id} style={styles.container}>
-            <TouchableOpacity onPress={() => navigation.navigate('Détails', { poke: poke })}>
-              <Image source={{ uri: poke.image, height: 200, width: 200 }} style={{ alignSelf: 'center' }} resizeMode="contain" />
-              <Text style={{ color: '#fff', fontSize: 20, textAlign: 'center' }}>{poke.name}</Text>
-              <Text>{poke.url}</Text>
-            </TouchableOpacity>
-          </View>)
-
-      })
-      }
+      {status === "success" &&
+        data !== undefined &&
+        data?.map((poke) => {
+          return (
+            <View key={poke.id} style={styles.container}>
+              <TouchableOpacity
+                onPress={() => navigation.navigate("Détails", { poke })}
+              >
+                <Image
+                  source={{ uri: poke.image, height: 200, width: 200 }}
+                  style={{ alignSelf: "center" }}
+                  resizeMode="contain"
+                />
+                <Text
+                  style={{
+                    color: style.colors.white,
+                    fontSize: 20,
+                    textAlign: "center",
+                  }}
+                >
+                  {poke.name}
+                </Text>
+                <Text>{poke.url}</Text>
+              </TouchableOpacity>
+            </View>
+          );
+        })}
       <StatusBar style="auto" />
-    </ScrollView >
-
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#31375b',
+    backgroundColor: style.colors.primary0,
   },
   item: {
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    padding: style.spacing.baseLg,
+    marginVertical: style.spacing.demi,
+    marginHorizontal: style.spacing.base,
   },
 
   launcher: {
-    textAlign: 'center',
-    backgroundColor: 'pink',
-    marginTop: '50%',
-    marginHorizontal: '10%',
-    borderRadius: 100,
-    elevation: 10,
-    margin: 10,
-    padding: 15
+    textAlign: "center",
+    backgroundColor: style.colors.pink,
+    marginTop: style.percents.p50,
+    marginHorizontal: style.percents.p10,
+    borderRadius: style.radius.full,
+    elevation: style.spacing.demiLG,
+    margin: style.spacing.demiLG,
+    padding: style.spacing.base,
   },
 
   loader: {
-    marginTop: '50%'
+    marginTop: style.percents.p50,
   },
 
   listContainer: {
-    marginHorizontal: '50%',
-    backgroundColor: 'red'
-  }
-
+    marginHorizontal: style.percents.p50,
+    backgroundColor: style.colors.red,
+  },
 });

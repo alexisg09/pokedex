@@ -1,5 +1,8 @@
 {
   "expo": {
+    "androidStatusBar": {
+      "translucent": true
+    },
     "name": "pokedex",
     "slug": "pokedex",
     "version": "1.0.0",
