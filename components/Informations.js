@@ -5,9 +5,8 @@ import { StatusBar } from 'expo-status-bar';
 
 const Informations = () => {
   return (
-    <ScrollView>
-      <Text>Informations page</Text>
-
+    <ScrollView style={styles.container}>
+      <Text style={styles.item}>Informations page</Text>
       <StatusBar style="auto" />
     </ScrollView >
 
@@ -17,15 +16,14 @@ const Informations = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#DEDEDE',
-    color: "#fff",
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: '#31375b',
   },
   item: {
-    padding: 20,
-    marginVertical: 8,
-    marginHorizontal: 16,
+    paddingTop: 40,
+    display: 'flex',
+    alignSelf: 'center',
+    color: "#ffffff",
+
   },
 });
 
