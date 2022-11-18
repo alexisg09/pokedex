@@ -5,60 +5,46 @@ import React, { useEffect } from "react";
 import { StyleSheet, Image, Text, View } from "react-native";
 
 import style from "../styles/style";
+import { Pokemon } from "../types/pokemon";
+
+interface colorTypeCombo {
+  color: string;
+  type: string;
+}
 
 export default function PokemonDetails({ route }) {
-  const getColorFromType = (type) => {
-    switch (type) {
-      case "Plante":
-        return "darkgreen";
-      case "Feu":
-        return "crimson";
-      case "Eau":
-        return "cornflowerblue";
-      case "Poison":
-        return "darkorchid";
-      case "Fée":
-        return "pink";
-      case "Psy":
-        return "mediumvioletred";
-      case "Spectre":
-        return "darkmagenta";
-      case "Combat":
-        return "coral";
-      case "Normal":
-        return "gray";
-      case "Électrik":
-        return "gold";
-      case "Sol":
-        return "moccasin";
-      case "Roche":
-        return "brown";
-      case "Acier":
-        return "slategray";
-      case "Vol":
-        return "lightblue";
-      case "Ténèbres":
-        return "darkslategrey";
-      case "Dragon":
-        return "darkblue";
-      case "Insecte":
-        return "#9acd32";
-      case "Glace":
-        return "deepskyblue";
-
-      default:
-        return "white";
-    }
+  const colorTypes: colorTypeCombo[] = [
+    { type: "Plante", color: "darkgreen" },
+    { type: "Feu", color: "crimson" },
+    { type: "Eau", color: "cornflowerblue" },
+    { type: "Poison", color: "darkorchid" },
+    { type: "Fée", color: "pink" },
+    { type: "Psy", color: "mediumvioletred" },
+    { type: "Spectre", color: "darkmagenta" },
+    { type: "Combat", color: "coral" },
+    { type: "Normal", color: "gray" },
+    { type: "Électrik", color: "gold" },
+    { type: "Sol", color: "moccasin" },
+    { type: "Roche", color: "brown" },
+    { type: "Acier", color: "slategray" },
+    { type: "Vol", color: "lightblue" },
+    { type: "Ténèbres", color: "darkslategray" },
+    { type: "Dragon", color: "darkblue" },
+    { type: "Insecte", color: "#9acd32" },
+    { type: "Glace", color: "deepskyblue" },
+  ];
+  const findColorFromType = (typeGiven: string): colorTypeCombo => {
+    return colorTypes.find((type) => type.type === typeGiven);
   };
 
   const navigation = useNavigation();
 
-  const pokemon = route.params.poke;
+  const pokemon: Pokemon = route.params.poke;
 
   useEffect(() => {
     navigation.setOptions({
       headerStyle: {
-        backgroundColor: getColorFromType(pokemon.apiTypes[0].name),
+        backgroundColor: findColorFromType(pokemon.apiTypes[0].name).color,
       },
     });
   }, []);
@@ -67,13 +53,14 @@ export default function PokemonDetails({ route }) {
     <LinearGradient
       style={styles.detailContainer}
       colors={[
-        getColorFromType(pokemon.apiTypes[0].name),
-        getColorFromType(pokemon.apiTypes[1] ? pokemon.apiTypes[1].name : ""),
+        findColorFromType(pokemon.apiTypes[0].name).color,
+        // eslint-disable-next-line prettier/prettier
+        findColorFromType(pokemon.apiTypes.length > 1 ? pokemon.apiTypes[1].name : "").color,
       ]}
     >
       <Image
         source={{ uri: pokemon.image }}
-        style={{ width: 300, height: 300, resizeMode: 'cover' }}
+        style={{ width: 300, height: 300, resizeMode: "cover" }}
       />
       <Text style={{ fontSize: 30 }}>{pokemon.name}</Text>
       <View style={{ paddingVertical: 15 }}>
