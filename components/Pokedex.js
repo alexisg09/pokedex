@@ -17,7 +17,7 @@ import {
 import { fetchPokemons } from '../api/fetchPokemons';
 import style from '../styles/style';
 
-export default function App() {
+export default function Pokedex() {
   const [enableFetch, setEnableFetch] = useState(false);
   const [isRefreshing, setIsRefreshing] = useState(false);
   const { data, status, isLoading, isError } = useQuery(['pokemons'], () => fetchPokemons(), {
@@ -84,7 +84,7 @@ export default function App() {
         data?.map((poke) => {
           return (
             <View key={poke.id} style={styles.container}>
-              <TouchableOpacity onPress={() => navigation.navigate('Détails', { poke })}>
+              <TouchableOpacity onPress={() => navigation.navigate('PokemonDetails', { poke })}>
                 <Image
                   source={{ uri: poke.image, height: 200, width: 200 }}
                   style={{ alignSelf: 'center' }}

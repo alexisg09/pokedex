@@ -5,8 +5,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 
 import Informations from './components/Informations';
-import PokemonDetails from './components/ItemDetails';
-import ListItem from './components/ListItem';
+import PokemonDetails from './components/PokemonDetails';
+import Pokedex from './components/Pokedex';
 import style from './styles/style';
 
 // Create a client
@@ -24,9 +24,9 @@ const App = () => {
           tabBarIcon: ({ focused, color, size }) => {
             let iconName;
 
-            if (route.name === 'Pokédex') {
+            if (route.name === 'Pokedex') {
               iconName = focused ? 'baseball' : 'baseball-outline';
-            } else if (route.name === 'Crédits') {
+            } else if (route.name === 'Informations') {
               iconName = focused ? 'newspaper' : 'newspaper-outline';
             }
 
@@ -45,8 +45,8 @@ const App = () => {
             borderTopColor: style.colors.primary0,
           },
         })}>
-        <Tab.Screen name="Pokédex" component={ListItem} />
-        <Tab.Screen name="Crédits" component={Informations} />
+        <Tab.Screen name="Pokedex" component={Pokedex} />
+        <Tab.Screen name="Informations" component={Informations} />
       </Tab.Navigator>
     );
   };
@@ -59,8 +59,8 @@ const App = () => {
             headerTitleStyle: { color: style.colors.white },
           }}>
           <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-          <Stack.Screen name="Pokédex" component={ListItem} />
-          <Stack.Screen name="Détails" component={PokemonDetails} />
+          <Stack.Screen name="Pokedex" component={Pokedex} />
+          <Stack.Screen name="PokemonDetails" component={PokemonDetails} />
         </Stack.Navigator>
       </NavigationContainer>
     </QueryClientProvider>

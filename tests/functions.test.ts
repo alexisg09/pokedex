@@ -1,4 +1,4 @@
-import { findColorFromType } from '../components/ItemDetails';
+import { findColorFromType } from '../components/PokemonDetails';
 
 test('Should return the correct colorTypeCombo given a specific type', () => {
   console.log(findColorFromType('Combat'));
