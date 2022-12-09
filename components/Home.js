@@ -1,9 +1,9 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import Informations from './components/Informations';
-import Pokedex from './components/Pokedex';
-import style from './styles/style';
+import style from '../styles/style';
+import Informations from './Informations';
+import Pokedex from './Pokedex';
 
 export default function Home() {
   const Tab = createBottomTabNavigator();

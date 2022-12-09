@@ -7,8 +7,6 @@ import Pokedex from './components/Pokedex';
 import PokemonDetails from './components/PokemonDetails';
 import style from './styles/style';
 
-// Create a client
-
 const App = () => {
   const queryClient = new QueryClient();
 
